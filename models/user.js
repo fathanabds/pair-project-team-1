@@ -1,25 +1,73 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
+const bcrypt = require('bcrypt');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+    static roles = ['Patient', 'Doctor'];
+
     static associate(models) {
-      // define association here
+      User.hasOne(models.UserProfile);
+      User.belongsToMany(models.Disease, { through: 'MedicalRecords', as: 'PatientRecords', foreignKey: 'PatientId' });
+      User.belongsToMany(models.Disease, { through: 'MedicalRecords', as: 'DoctorRecords', foreignKey: 'DoctorId' });
     }
   }
-  User.init({
-    email: DataTypes.STRING,
-    password: DataTypes.STRING,
-    role: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'User',
+  User.init(
+    {
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          isEmail: {
+            msg: 'Invalid Email Format',
+          },
+          notNull: {
+            msg: 'Email is Required',
+          },
+          notEmpty: {
+            msg: 'Email is Required',
+          },
+        },
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Password is Required',
+          },
+          notEmpty: {
+            msg: 'Password is Required',
+          },
+        },
+      },
+      role: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Role is Required',
+          },
+          notEmpty: {
+            msg: 'Role is Required',
+          },
+          isIn: {
+            args: [['Doctor', 'Patient']],
+            msg: 'Role Must be Doctor or Patient',
+          },
+        },
+      },
+    },
+    {
+      sequelize,
+      modelName: 'User',
+    }
+  );
+
+  User.beforeCreate((user) => {
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(user.password, salt);
+    user.password = hash;
   });
+
   return User;
 };

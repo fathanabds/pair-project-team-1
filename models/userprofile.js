@@ -1,24 +1,26 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class UserProfile extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      UserProfile.belongsTo(models.User);
+    }
+
+    get age() {
+      const year = new Date().getFullYear();
+      return year - this.dateOfBirth.getFullYear();
     }
   }
-  UserProfile.init({
-    name: DataTypes.STRING,
-    UserId: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'UserProfile',
-  });
+  UserProfile.init(
+    {
+      name: DataTypes.STRING,
+      UserId: DataTypes.INTEGER,
+      dateOfBirth: DataTypes.DATE,
+    },
+    {
+      sequelize,
+      modelName: 'UserProfile',
+    }
+  );
   return UserProfile;
 };
