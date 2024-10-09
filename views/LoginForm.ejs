@@ -8,6 +8,10 @@
   <body>
     <h1>Login User</h1>
 
+    <% if (error) { %>
+    <p style="color: red"><%= error %></p>
+    <% } %>
+
     <form method="post">
       <p>
         <label for="email">Email</label> <br />

@@ -24,8 +24,9 @@ class UserController {
   }
 
   static async getLogin(req, res) {
+    const { error } = req.query;
     try {
-      res.render('LoginForm');
+      res.render('LoginForm', { error });
     } catch (error) {
       console.log(error);
       res.send(error.message);
@@ -56,6 +57,15 @@ class UserController {
       }
       // res.send(user);
       // res.send(req.body);
+    } catch (error) {
+      console.log(error);
+      res.send(error.message);
+    }
+  }
+
+  static async getAllMR(req, res) {
+    try {
+      res.render('MedicalRecords');
     } catch (error) {
       console.log(error);
       res.send(error.message);
