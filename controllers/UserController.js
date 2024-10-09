@@ -1,4 +1,4 @@
-const { User, UserProfile } = require('../models');
+const { User, UserProfile, Disease } = require('../models');
 const bcrypt = require('bcrypt');
 
 class UserController {
@@ -46,7 +46,7 @@ class UserController {
         const isValidPassword = bcrypt.compareSync(password, user.password);
         if (isValidPassword) {
           // return res.send('berhasil login');
-          return res.redirect('/');
+          return res.redirect(`/${user.id}`);
         } else {
           const error = 'Invalid Password';
           return res.redirect(`/login?error=${error}`);
@@ -64,8 +64,25 @@ class UserController {
   }
 
   static async getAllMR(req, res) {
+    const { userId } = req.params;
     try {
-      res.render('MedicalRecords');
+      const data = await User.findByPk(userId, {
+        include: {
+          association: 'PatientRecords',
+        },
+      });
+      res.send(data);
+      // res.render('MedicalRecords', { userId });
+    } catch (error) {
+      console.log(error);
+      res.send(error.message);
+    }
+  }
+
+  static async getAddMR(req, res) {
+    const { userId } = req.params;
+    try {
+      res.render('AddMRForm');
     } catch (error) {
       console.log(error);
       res.send(error.message);
