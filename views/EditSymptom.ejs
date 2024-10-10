@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Patient Symptom</title>
+  </head>
+  <body>
+    <h1>Edit Patient Symptom Medical Record #<%= patientSymptoms.id %></h1>
+    <form method="post">
+      <input type="hidden" id="userId" name="userId" value="<%= patientSymptoms.PatientId %>" />
+      <p>
+        <label for="symptom">Symptom</label> <br />
+        <textarea name="symptom" id="symptom"><%= patientSymptoms.symptom %></textarea>
+      </p>
+      <button>Submit</button>
+    </form>
+  </body>
+</html>

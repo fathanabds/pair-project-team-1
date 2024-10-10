@@ -3,7 +3,7 @@ const isLoggedIn = function (req, res, next) {
     return next();
   }
   const error = 'You are Not Logged In';
-  return res.redirect(`/login?error=${error}`);
+  return res.redirect(`/user/login?error=${error}`);
 };
 
 const isPatient = function (req, res, next) {
@@ -11,7 +11,7 @@ const isPatient = function (req, res, next) {
     return next();
   }
   const error = 'You Have No Access';
-  return res.redirect(`/showMedicalRecords/${req.session.user.id}?error=${error}`);
+  return res.redirect(`/medicalRecord/patients/${req.session.user.id}?error=${error}`);
 };
 
 const isDoctor = function (req, res, next) {
@@ -19,7 +19,7 @@ const isDoctor = function (req, res, next) {
     return next();
   }
   const error = 'You Have No Access';
-  return res.redirect(`/showMedicalRecords/${req.session.user.id}?error=${error}`);
+  return res.redirect(`/medicalRecord/doctors/${req.session.user.id}?error=${error}`);
 };
 
 module.exports = { isLoggedIn, isPatient, isDoctor };

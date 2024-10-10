@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Medical Records</title>
+    <title>Diseases</title>
     <style>
       table {
         font-family: arial, sans-serif;
@@ -23,35 +23,25 @@
     </style>
   </head>
   <body>
-    <%- include('partials/Navbar', {user}) %>
-
-    <h1>Medical Records</h1>
-
-    <a href="/addMedicalRecord/<%= user.id %>"><button>Add Medical Record</button></a>
-    <hr />
+    <h1>Diseases List</h1>
 
     <table>
       <tr>
-        <th>Patient Name</th>
-        <th>Doctor Name</th>
+        <th>No.</th>
         <th>Disease Name</th>
-        <th>Disease Desc</th>
-        <th>Cost</th>
-        <th>Symptoms</th>
+        <th>Disease Description</th>
         <th>Action</th>
       </tr>
+      <% diseases.forEach((el, i) => { %>
       <tr>
-        <td>Alfreds Futterkiste</td>
-        <td>Maria Anders</td>
-        <td>Germany</td>
-        <td>Germany</td>
-        <td>Germany</td>
-        <td>Germany</td>
+        <td><%= i+1 %></td>
+        <td><%= el.name %></td>
+        <td><%= el.desc %></td>
         <td>
-          <button>Edit Symptoms</button>
-          <button>Resolve</button>
+          <a href="/diseases/delete/<%= el.id %>"><button>Delete</button></a>
         </td>
       </tr>
+      <% }) %>
     </table>
   </body>
 </html>

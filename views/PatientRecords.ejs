@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Patient Medical Records</title>
+    <style>
+      table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+      }
+
+      td,
+      th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+
+      tr:nth-child(even) {
+        background-color: #dddddd;
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('partials/Navbar', {user}) %>
+
+    <h1>Patient Medical Records</h1>
+
+    <% if (error) { %>
+    <p style="color: red"><%= error %></p>
+    <% } %>
+
+    <a href="/medicalRecord/add/<%= user.id %>"><button>Add Medical Record</button></a>
+    <hr />
+
+    <table>
+      <tr>
+        <th>No.</th>
+        <th>Doctor Name</th>
+        <th>Disease Name</th>
+        <th>Disease Desc</th>
+        <th>Cost</th>
+        <th>Symptoms</th>
+        <th>Action</th>
+      </tr>
+      <% user.PatientRecord.forEach((el, i) => { %>
+      <tr>
+        <td><%= i+1 %></td>
+        <td><%= el.Doctor.UserProfile.name %></td>
+        <td><%= el.Disease? el.Disease.name : '--' %></td>
+        <td><%= el.Disease? el.Disease.desc : '--' %></td>
+        <td><%= el.Disease? el.cost : '--' %></td>
+        <td><%= el.symptom %></td>
+        <td>
+          <% if (!el.cost) { %>
+          <a href="/medicalRecord/editSymptom/<%= el.id %>"><button>Edit Symptoms</button></a>
+          <% } else { %> Resolved <% } %>
+        </td>
+      </tr>
+      <% }) %>
+    </table>
+  </body>
+</html>

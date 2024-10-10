@@ -1,5 +1,9 @@
 <nav>
-  <a href="/">HaloDek</a>
-  <a href="/profile/<%= user.id %>">Profile</a>
-  <a href="/showMedicalRecords/<%= user.id %>">Medical Records</a>
+  <a href="/">Ola, Doc!</a>
+  <a href="/user/profile/<%= user.id %>">Profile</a>
+  <% if (user.role == 'Doctor') { %>
+  <a href="/medicalRecord/patients/<%= user.id %>">Medical Records</a>
+  <% } else { %>
+  <a href="/medicalRecord/doctors/<%= user.id %>">Medical Records</a>
+  <% } %>
 </nav>

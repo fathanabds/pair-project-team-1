@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resolve Medical Records</title>
+  </head>
+  <body>
+    <h1>Resolve Medical Records #<%= patientSymptoms.id %></h1>
+    <p>Symptoms: <%= patientSymptoms.symptom %></p>
+    <form method="post">
+      <input type="hidden" id="userId" name="userId" value="<%= patientSymptoms.DoctorId %>" />
+      <p>
+        <label for="DiseaseId">Disease Name</label> <br />
+        <select name="DiseaseId" id="DiseaseId">
+          <option value="">--- Select One ---</option>
+          <% diseases.forEach(el => { %>
+          <option value="<%= el.id %>"><%= el.name %></option>
+          <% }) %>
+        </select>
+      </p>
+      <p>
+        <label for="cost">Cost</label> <br />
+        <input type="number" name="cost" id="cost" />
+      </p>
+      <button>Submit</button>
+    </form>
+  </body>
+</html>
