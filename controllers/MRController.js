@@ -1,4 +1,4 @@
-const { User, UserProfile, Disease, MedicalRecord } = require("../models");
+const { Disease, MedicalRecord } = require("../models");
 const nodemailer = require("nodemailer");
 
 class MRController {
