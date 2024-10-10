@@ -1,11 +1,57 @@
-<nav>
-  <a href="/"><button>Ola, Doc!</button></a>
-  <a href="/user/profile/"><button>Profile</button></a>
-  <% if (user.role == 'Doctor') { %>
-  <a href="/medicalRecord/doctors/"><button>Medical Records</button></a>
-  <a href="/diseases"><button>Diseases List</button></a>
-  <% } else { %>
-  <a href="/medicalRecord/patients/"><button>Medical Records</button></a>
-  <% } %>
-  <a href="/user/logout"><button>Log Out</button></a>
-</nav>
+<div
+  class="fixed inset-y-0 z-50 flex flex-col w-72 border-r border-gray-200 bg-gray-100 pb-4 pt-5"
+>
+  <div class="flex flex-col grow gap-y-5 overflow-y-auto px-6">
+    <div class="flex h-16 shrink-0 items-center">
+      <a href="/"
+        ><img class="h-14 w-auto" src="/images/Logo_OlaDoc.png" alt=""
+      /></a>
+    </div>
+    <nav class="flex flex-1 flex-col">
+      <ul class="flex flex-1 flex-col gap-y-7">
+        <li>
+          <ul class="-mx-2 space-y-1">
+            <li>
+              <a
+                class="flex p-2 rounded-md text-sm font-semibold hover:bg-gray-50"
+                href="/user/profile/"
+                ><button>Profile</button></a
+              >
+            </li>
+            <% if (user.role == 'Doctor') { %>
+            <li>
+              <a
+                class="flex p-2 rounded-md text-sm font-semibold hover:bg-gray-50"
+                href="/medicalRecord/doctors/"
+                ><button>Medical Records</button></a
+              >
+            </li>
+            <li>
+              <a
+                class="flex p-2 rounded-md text-sm font-semibold hover:bg-gray-50"
+                href="/diseases"
+                ><button>Diseases List</button></a
+              >
+            </li>
+            <% } else { %>
+            <li>
+              <a
+                class="flex p-2 rounded-md text-sm font-semibold hover:bg-gray-50"
+                href="/medicalRecord/patients/"
+                ><button>Medical Records</button></a
+              >
+            </li>
+            <% } %>
+            <li>
+              <a
+                class="flex p-2 rounded-md text-sm font-semibold hover:bg-gray-50 text-red-500"
+                href="/user/logout"
+                ><button>Log Out</button></a
+              >
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
