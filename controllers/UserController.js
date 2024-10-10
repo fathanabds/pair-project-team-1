@@ -1,5 +1,5 @@
 const rupiahFormatter = require('../helpers/rupiahFormatter');
-const { User, UserProfile, Disease, MedicalRecord } = require('../models');
+const { User, UserProfile, MedicalRecord } = require('../models');
 const bcrypt = require('bcrypt');
 
 class UserController {
@@ -16,18 +16,23 @@ class UserController {
   static async postRegister(req, res) {
     let { name, email, password, role, dateOfBirth } = req.body;
     try {
+      if (!name || !dateOfBirth) {
+        throw new Error('Name and Date of Birth is Required');
+      }
       const newUser = await User.create({ email, password, role });
       await UserProfile.create({ UserId: newUser.id, name, dateOfBirth });
       res.redirect('/user/login');
     } catch (error) {
       console.log(error);
+      if (error.name != 'SequelizeValidationError') {
+        return res.send(error.message);
+      }
       if ((error.name = 'SequelizeValidationError')) {
         const errors = error.errors.map((e) => {
           return ` ${e.message}`;
         });
         return res.redirect(`/user/register?error=${errors}`);
       }
-      res.send(error);
     }
   }
 
@@ -149,7 +154,6 @@ class UserController {
   }
 
   static async getAddMR(req, res) {
-    const { userId } = req.session.user.id;
     try {
       const doctors = await User.findAll({
         where: {
@@ -167,7 +171,6 @@ class UserController {
   }
 
   static async postAddMR(req, res) {
-    const { userId } = req.params;
     const { DoctorId, symptom } = req.body;
     try {
       await MedicalRecord.create({ PatientId: req.session.user.id, DoctorId, symptom });
