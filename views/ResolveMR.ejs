@@ -3,26 +3,46 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>Resolve Medical Records</title>
   </head>
   <body>
-    <h1>Resolve Medical Records #<%= patientSymptoms.id %></h1>
-    <p>Symptoms: <%= patientSymptoms.symptom %></p>
-    <form method="post">
-      <p>
-        <label for="DiseaseId">Disease Name</label> <br />
-        <select name="DiseaseId" id="DiseaseId">
-          <option value="">--- Select One ---</option>
-          <% diseases.forEach(el => { %>
-          <option value="<%= el.id %>"><%= el.name %></option>
-          <% }) %>
-        </select>
+    <div class="flex flex-col w-full max-w-md mx-auto min-h-full p-10">
+      <h1 class="text-lg font-semibold text-gray-900">
+        Resolve Medical Records #<%= patientSymptoms.id %>
+      </h1>
+      <p class="text-base text-gray-900 mt-3">
+        Symptoms: <%= patientSymptoms.symptom %>
       </p>
-      <p>
-        <label for="cost">Cost</label> <br />
-        <input type="number" name="cost" id="cost" />
-      </p>
-      <button>Submit</button>
-    </form>
+      <form class="mt-10 flex flex-col gap-y-8" method="post">
+        <div>
+          <label class="block text-sm font-medium" for="DiseaseId"
+            >Disease Name</label
+          >
+          <br />
+          <select class="w-full" name="DiseaseId" id="DiseaseId">
+            <option value="">--- Select One ---</option>
+            <% diseases.forEach(el => { %>
+            <option value="<%= el.id %>"><%= el.name %></option>
+            <% }) %>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium" for="cost">Cost</label>
+          <br />
+          <input
+            class="block rounded-md border border-gray-300 text-gray-900 w-full"
+            type="number"
+            name="cost"
+            id="cost"
+          />
+        </div>
+        <button
+          class="rounded-md text-base font-semibold shadow-sm bg-blue-600 hover:bg-gray-500 text-white w-full"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
   </body>
 </html>

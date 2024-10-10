@@ -3,54 +3,84 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>Diseases</title>
-    <style>
-      table {
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-      }
-
-      td,
-      th {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-      }
-
-      tr:nth-child(even) {
-        background-color: #dddddd;
-      }
-    </style>
   </head>
   <body>
-    <h1>Diseases List</h1>
-
-    <form>
-      <input type="text" name="search" id="search" />
-      <button>Search</button>
-    </form>
-    <hr />
-
-    <a href="/diseases/add"><button>Add Disease</button></a>
-    <hr />
-
-    <table>
-      <tr>
-        <th>No.</th>
-        <th>Disease Name</th>
-        <th>Disease Description</th>
-        <th>Action</th>
-      </tr>
-      <% diseases.forEach((el, i) => { %>
-      <tr>
-        <td><%= i+1 %></td>
-        <td><%= el.name %></td>
-        <td><%= el.desc %></td>
-        <td>
-          <a href="/diseases/delete/<%= el.id %>"><button>Delete</button></a>
-        </td>
-      </tr>
-      <% }) %>
-    </table>
+    <main class="flex-1 max-w-3xl mx-auto">
+      <div class="border-b border-gray-200 p-4 flex flex-col">
+        <h1 class="text-lg text-center font-medium mb-2">Diseases List</h1>
+        <form class="w-full flex items-center h-8">
+          <input
+            class="block rounded-md h-full border border-gray-300 text-gray-900 w-full"
+            type="text"
+            name="search"
+            id="search"
+          />
+          <button
+            class="rounded-md h-full text-base font-semibold shadow-sm bg-blue-600 hover:bg-gray-500 text-white px-4"
+          >
+            Search
+          </button>
+        </form>
+      </div>
+      <div class="p-4">
+        <div class="flex">
+          <a
+            class="px-4 p-3 rounded-md text-base font-semibold bg-blue-600 hover:bg-blue-500 text-white"
+            href="/diseases/add"
+            ><button>Add Disease</button></a
+          >
+        </div>
+        <div class="mt-8">
+          <table class="min-w-full">
+            <tr class="border-t border-gray-200">
+              <th
+                class="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-sm font-semibold"
+              >
+                No.
+              </th>
+              <th
+                class="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-sm font-semibold"
+              >
+                Disease Name
+              </th>
+              <th
+                class="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-sm font-semibold"
+              >
+                Disease Description
+              </th>
+              <th
+                class="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-sm font-semibold"
+              >
+                Action
+              </th>
+            </tr>
+            <tbody class="divide-y divide-gray-100">
+              <% diseases.forEach((el, i) => { %>
+              <tr class="even:bg-gray-50">
+                <td class="px-6 py-3 text-sm font-medium text-gray-500">
+                  <%= i+1 %>
+                </td>
+                <td class="px-6 py-3 text-sm font-medium text-gray-500">
+                  <%= el.name %>
+                </td>
+                <td class="px-6 py-3 text-sm font-medium text-gray-500">
+                  <%= el.desc %>
+                </td>
+                <td
+                  class="px-6 py-3 text-sm font-medium text-gray-500 whitespace-nowrap"
+                >
+                  <a class="text-red-500" href="/diseases/delete/<%= el.id %>"
+                    ><button>Delete</button></a
+                  >
+                </td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
   </body>
 </html>

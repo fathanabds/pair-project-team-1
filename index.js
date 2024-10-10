@@ -1,15 +1,15 @@
-const express = require('express');
-const session = require('express-session');
+const express = require("express");
+const session = require("express-session");
 
 const app = express();
 const port = 3000;
 
-app.set('view engine', 'ejs');
+app.set("view engine", "ejs");
 
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(
   session({
-    secret: 'Forbidden For Public Access',
+    secret: "Forbidden For Public Access",
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -18,7 +18,8 @@ app.use(
     },
   })
 );
-app.use(require('./routers'));
+app.use(require("./routers"));
+app.use("/images", express.static("publics/images"));
 
 // app.get('/'); // menampilkan tombol login dan register
 // app.get('/login'); // menampilkan form login

@@ -3,59 +3,98 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>Doctor Records</title>
-    <style>
-      table {
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-      }
-
-      td,
-      th {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-      }
-
-      tr:nth-child(even) {
-        background-color: #dddddd;
-      }
-    </style>
   </head>
   <body>
     <%- include('partials/Navbar', {user}) %>
-
-    <h1>Doctor Records</h1>
-
-    <% if (error) { %>
-    <p style="color: red"><%= error %></p>
-    <% } %>
-
-    <table>
-      <tr>
-        <th>No.</th>
-        <th>Patient Name</th>
-        <th>Disease Name</th>
-        <th>Disease Desc</th>
-        <th>Cost</th>
-        <th>Symptoms</th>
-        <th>Action</th>
-      </tr>
-      <% user.DoctorRecord.forEach((el, i) => { %>
-      <tr>
-        <td><%= i+1 %></td>
-        <td><%= el.Patient.UserProfile.name %></td>
-        <td><%= el.Disease? el.Disease.name : '--' %></td>
-        <td><%= el.Disease? el.Disease.desc : '--' %></td>
-        <td><%= el.Disease? rupiahFormatter(el.cost) : '--' %></td>
-        <td><%= el.symptom %></td>
-        <td>
-          <% if (!el.cost) { %>
-          <a href="/medicalRecord/resolve/<%= el.id %>"><button>Resolve</button></a>
-          <% } else { %> Resolved <% } %>
-        </td>
-      </tr>
-      <% }) %>
-    </table>
+    <div class="pl-72">
+      <main class="flex-1">
+        <div class="border-b border-gray-200 p-4 flex items-center">
+          <h1 class="text-lg font-medium">Doctor Records</h1>
+        </div>
+        <div>
+          <% if (error) { %>
+          <p class="text-red-500"><%= error %></p>
+          <% } %>
+          <div class="mt-8">
+            <table class="min-w-full">
+              <tr class="border-t border-gray-200">
+                <th
+                  class="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-sm font-semibold"
+                >
+                  No.
+                </th>
+                <th
+                  class="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-sm font-semibold"
+                >
+                  Patient Name
+                </th>
+                <th
+                  class="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-sm font-semibold"
+                >
+                  Disease Name
+                </th>
+                <th
+                  class="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-sm font-semibold"
+                >
+                  Disease Desc
+                </th>
+                <th
+                  class="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-sm font-semibold"
+                >
+                  Cost
+                </th>
+                <th
+                  class="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-sm font-semibold"
+                >
+                  Symptoms
+                </th>
+                <th
+                  class="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-sm font-semibold"
+                >
+                  Action
+                </th>
+              </tr>
+              <tbody class="divide-y divide-gray-100">
+                <% user.DoctorRecord.forEach((el, i) => { %>
+                <tr class="even:bg-gray-50">
+                  <td class="px-6 py-3 text-sm font-medium text-gray-500">
+                    <%= i+1 %>
+                  </td>
+                  <td class="px-6 py-3 text-sm font-medium text-gray-500">
+                    <%= el.Patient.UserProfile.name %>
+                  </td>
+                  <td class="px-6 py-3 text-sm font-medium text-gray-500">
+                    <%= el.Disease? el.Disease.name : '--' %>
+                  </td>
+                  <td class="px-6 py-3 text-sm font-medium text-gray-500">
+                    <%= el.Disease? el.Disease.desc : '--' %>
+                  </td>
+                  <td class="px-6 py-3 text-sm font-medium text-gray-500">
+                    <%= el.Disease? rupiahFormatter(el.cost) : '--' %>
+                  </td>
+                  <td class="px-6 py-3 text-sm font-medium text-gray-500">
+                    <%= el.symptom %>
+                  </td>
+                  <td
+                    class="px-6 py-3 text-sm font-medium text-gray-500 flex items-center gap-3 whitespace-nowrap"
+                  >
+                    <% if (!el.cost) { %>
+                    <a
+                      class="text-indigo-600"
+                      href="/medicalRecord/resolve/<%= el.id %>"
+                      ><button>Resolve</button></a
+                    >
+                    <% } else { %> Resolved <% } %>
+                  </td>
+                </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
   </body>
 </html>
