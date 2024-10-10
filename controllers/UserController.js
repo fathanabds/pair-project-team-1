@@ -41,12 +41,11 @@ class UserController {
           email,
         },
       });
-
       if (user) {
         const isValidPassword = bcrypt.compareSync(password, user.password);
         if (isValidPassword) {
-          // return res.send('berhasil login');
-          return res.redirect(`/${user.id}`);
+          req.session.user = { email: user.email, role: user.role };
+          return res.redirect(`/showMedicalRecords/${user.id}`);
         } else {
           const error = 'Invalid Password';
           return res.redirect(`/login?error=${error}`);
@@ -69,6 +68,13 @@ class UserController {
       const data = await User.findByPk(userId, {
         include: {
           association: 'PatientRecords',
+          attribute: [],
+          include: {
+            association: 'DoctorRecords',
+            include: {
+              model: UserProfile,
+            },
+          },
         },
       });
       res.send(data);
