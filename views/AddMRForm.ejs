@@ -7,5 +7,22 @@
   </head>
   <body>
     <h1>Add New Medical Record</h1>
+
+    <form method="post" action="/addMedicalRecord/<%= userId %>">
+      <p>
+        <label for="DoctorId">Doctor</label> <br />
+        <select name="DoctorId" id="DoctorId">
+          <option value="">--- Select One ---</option>
+          <% doctors.forEach(el => { %>
+          <option value="<%= el.id %>"><%= el.UserProfile.name %></option>
+          <% }) %>
+        </select>
+      </p>
+      <p>
+        <label for="symptom">Symptoms</label> <br />
+        <textarea name="symptom" id="symptom"></textarea>
+      </p>
+      <button>Save</button>
+    </form>
   </body>
 </html>

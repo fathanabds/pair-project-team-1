@@ -23,23 +23,34 @@
     </style>
   </head>
   <body>
+    <%- include('partials/Navbar', {user}) %>
+
     <h1>Medical Records</h1>
 
-    <a href="/addMedicalRecord/<%= userId %>"><button>Add Medical Record</button></a>
+    <a href="/addMedicalRecord/<%= user.id %>"><button>Add Medical Record</button></a>
     <hr />
 
     <table>
       <tr>
+        <th>Patient Name</th>
         <th>Doctor Name</th>
         <th>Disease Name</th>
         <th>Disease Desc</th>
         <th>Cost</th>
         <th>Symptoms</th>
+        <th>Action</th>
       </tr>
       <tr>
         <td>Alfreds Futterkiste</td>
         <td>Maria Anders</td>
         <td>Germany</td>
+        <td>Germany</td>
+        <td>Germany</td>
+        <td>Germany</td>
+        <td>
+          <button>Edit Symptoms</button>
+          <button>Resolve</button>
+        </td>
       </tr>
     </table>
   </body>

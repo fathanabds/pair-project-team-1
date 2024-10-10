@@ -1,4 +1,4 @@
-const { User, UserProfile, Disease } = require('../models');
+const { User, UserProfile, Disease, MedicalRecord } = require('../models');
 const bcrypt = require('bcrypt');
 
 class UserController {
@@ -44,7 +44,7 @@ class UserController {
       if (user) {
         const isValidPassword = bcrypt.compareSync(password, user.password);
         if (isValidPassword) {
-          req.session.user = { email: user.email, role: user.role };
+          req.session.user = { id: user.id, email: user.email, role: user.role };
           return res.redirect(`/showMedicalRecords/${user.id}`);
         } else {
           const error = 'Invalid Password';
@@ -54,8 +54,36 @@ class UserController {
         const error = 'Invalid Email';
         return res.redirect(`/login?error=${error}`);
       }
-      // res.send(user);
-      // res.send(req.body);
+    } catch (error) {
+      console.log(error);
+      res.send(error.message);
+    }
+  }
+
+  static async getLogout(req, res) {
+    try {
+      req.session.destroy(function (err) {
+        if (err) {
+          return res.send(err.message);
+        }
+        return res.redirect('/login');
+      });
+    } catch (error) {
+      console.log(error);
+      res.send(error.message);
+    }
+  }
+
+  static async getProfile(req, res) {
+    const { userId } = req.params;
+    try {
+      const user = await User.findByPk(userId, {
+        attributes: { exclude: ['password'] },
+        include: {
+          model: UserProfile,
+        },
+      });
+      res.render('Profile', { user });
     } catch (error) {
       console.log(error);
       res.send(error.message);
@@ -65,20 +93,26 @@ class UserController {
   static async getAllMR(req, res) {
     const { userId } = req.params;
     try {
-      const data = await User.findByPk(userId, {
+      const user = await User.findByPk(userId, {
+        attributes: { exclude: ['password'] },
         include: {
-          association: 'PatientRecords',
-          attribute: [],
+          association: 'DoctorRecords',
           include: {
-            association: 'DoctorRecords',
+            association: 'PatientRecords',
             include: {
               model: UserProfile,
             },
           },
         },
       });
-      res.send(data);
-      // res.render('MedicalRecords', { userId });
+      const histories = await MedicalRecord.findAll({ where: { PatientId: userId } });
+      const userProfile = await User.findByPk(userId, {
+        include: {
+          model: UserProfile,
+        },
+      });
+      res.send(user);
+      // res.render('MedicalRecords', { user });
     } catch (error) {
       console.log(error);
       res.send(error.message);
@@ -88,7 +122,27 @@ class UserController {
   static async getAddMR(req, res) {
     const { userId } = req.params;
     try {
-      res.render('AddMRForm');
+      const doctors = await User.findAll({
+        where: {
+          role: 'Doctor',
+        },
+        include: {
+          model: UserProfile,
+        },
+      });
+      res.render('AddMRForm', { doctors, userId });
+    } catch (error) {
+      console.log(error);
+      res.send(error.message);
+    }
+  }
+
+  static async postAddMR(req, res) {
+    const { userId } = req.params;
+    const { DoctorId, symptom } = req.body;
+    try {
+      await MedicalRecord.create({ PatientId: userId, DoctorId, symptom });
+      res.redirect(`/showMedicalRecords/${userId}`);
     } catch (error) {
       console.log(error);
       res.send(error.message);
