@@ -1,9 +1,11 @@
 <nav>
-  <a href="/">Ola, Doc!</a>
-  <a href="/user/profile/<%= user.id %>">Profile</a>
+  <a href="/"><button>Ola, Doc!</button></a>
+  <a href="/user/profile/"><button>Profile</button></a>
   <% if (user.role == 'Doctor') { %>
-  <a href="/medicalRecord/patients/<%= user.id %>">Medical Records</a>
+  <a href="/medicalRecord/doctors/"><button>Medical Records</button></a>
+  <a href="/diseases"><button>Diseases List</button></a>
   <% } else { %>
-  <a href="/medicalRecord/doctors/<%= user.id %>">Medical Records</a>
+  <a href="/medicalRecord/patients/"><button>Medical Records</button></a>
   <% } %>
+  <a href="/user/logout"><button>Log Out</button></a>
 </nav>

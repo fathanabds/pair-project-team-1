@@ -47,7 +47,7 @@
         <td><%= el.Patient.UserProfile.name %></td>
         <td><%= el.Disease? el.Disease.name : '--' %></td>
         <td><%= el.Disease? el.Disease.desc : '--' %></td>
-        <td><%= el.Disease? el.cost : '--' %></td>
+        <td><%= el.Disease? rupiahFormatter(el.cost) : '--' %></td>
         <td><%= el.symptom %></td>
         <td>
           <% if (!el.cost) { %>

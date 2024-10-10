@@ -31,7 +31,7 @@
     <p style="color: red"><%= error %></p>
     <% } %>
 
-    <a href="/medicalRecord/add/<%= user.id %>"><button>Add Medical Record</button></a>
+    <a href="/medicalRecord/add/"><button>Add Medical Record</button></a>
     <hr />
 
     <table>
@@ -50,12 +50,12 @@
         <td><%= el.Doctor.UserProfile.name %></td>
         <td><%= el.Disease? el.Disease.name : '--' %></td>
         <td><%= el.Disease? el.Disease.desc : '--' %></td>
-        <td><%= el.Disease? el.cost : '--' %></td>
+        <td><%= el.Disease? rupiahFormatter(el.cost) : '--' %></td>
         <td><%= el.symptom %></td>
         <td>
           <% if (!el.cost) { %>
           <a href="/medicalRecord/editSymptom/<%= el.id %>"><button>Edit Symptoms</button></a>
-          <% } else { %> Resolved <% } %>
+          <% } else { %> <a href="/medicalRecord/sendEmail/<%= el.id %>"><button>Send Email</button></a> <% } %>
         </td>
       </tr>
       <% }) %>

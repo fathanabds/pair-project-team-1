@@ -9,7 +9,6 @@
     <h1>Resolve Medical Records #<%= patientSymptoms.id %></h1>
     <p>Symptoms: <%= patientSymptoms.symptom %></p>
     <form method="post">
-      <input type="hidden" id="userId" name="userId" value="<%= patientSymptoms.DoctorId %>" />
       <p>
         <label for="DiseaseId">Disease Name</label> <br />
         <select name="DiseaseId" id="DiseaseId">

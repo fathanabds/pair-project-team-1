@@ -8,7 +8,6 @@
   <body>
     <h1>Edit Patient Symptom Medical Record #<%= patientSymptoms.id %></h1>
     <form method="post">
-      <input type="hidden" id="userId" name="userId" value="<%= patientSymptoms.PatientId %>" />
       <p>
         <label for="symptom">Symptom</label> <br />
         <textarea name="symptom" id="symptom"><%= patientSymptoms.symptom %></textarea>

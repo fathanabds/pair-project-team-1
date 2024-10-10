@@ -6,12 +6,15 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Register User</title>
   </head>
-  <body class="h-full">
+  <body class="">
     <div class="flex h-full flex-col justify-center py-12 px-6">
-      <div class="mx-auto w-full max-w-md">
-        <h1 class="text-center text-2xl font-bold">Register New User</h1>
-      </div>
       <div class="mx-auto w-full mt-10 max-w-[480px]">
+        <div class="mx-auto w-full max-w-md">
+          <h1 class="text-center my-5 text-2xl font-bold">Register New User</h1>
+        </div>
+        <% if (error) { %>
+        <p class="mb-3 text-red-500"><%= error %></p>
+        <% } %>
         <div class="bg-white px-6 py-12 shadow rounded-lg">
           <form class="space-y-6" method="post">
             <div class="space-y-2">
