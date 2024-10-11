@@ -3,12 +3,12 @@ const { isLoggedIn, isDoctor } = require('../middlewares/auth');
 const DiseaseController = require('../controllers/DiseaseController');
 const router = express.Router();
 
-router.use(isLoggedIn);
+router.use([isLoggedIn, isDoctor]);
 
 // main => /diseases
-router.get('/', isDoctor, DiseaseController.getDiseases);
-router.get('/add', isDoctor, DiseaseController.getAddDisease);
-router.post('/add', isDoctor, DiseaseController.getPostDisease);
-router.get('/delete/:diseaseId', isDoctor, DiseaseController.deleteDisease);
+router.get('/', DiseaseController.getDiseases);
+router.get('/add', DiseaseController.getAddDisease);
+router.post('/add', DiseaseController.getPostDisease);
+router.get('/delete/:diseaseId', DiseaseController.deleteDisease);
 
 module.exports = router;
