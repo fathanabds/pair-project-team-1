@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.use(isLoggedIn);
 
+// main => /diseases
 router.get('/', isDoctor, DiseaseController.getDiseases);
 router.get('/add', isDoctor, DiseaseController.getAddDisease);
 router.post('/add', isDoctor, DiseaseController.getPostDisease);

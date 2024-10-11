@@ -24,7 +24,7 @@ const isPatient = function (req, res, next) {
     return next();
   }
   const error = 'You Have No Access';
-  return res.redirect(`/medicalRecord/patients?error=${error}`);
+  return res.redirect(`/medicalRecord/doctors?error=${error}`);
 };
 
 const isDoctor = function (req, res, next) {
@@ -32,7 +32,7 @@ const isDoctor = function (req, res, next) {
     return next();
   }
   const error = 'You Have No Access';
-  return res.redirect(`/medicalRecord/doctors?error=${error}`);
+  return res.redirect(`/medicalRecord/patients?error=${error}`);
 };
 
 module.exports = { isLoggedIn, isPatient, isDoctor, isNotLoggedIn };

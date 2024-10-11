@@ -3,6 +3,7 @@ const { isLoggedIn, isNotLoggedIn } = require('../middlewares/auth');
 const UserController = require('../controllers/UserController');
 const router = express.Router();
 
+// main => /user
 router.get('/register', isNotLoggedIn, UserController.getRegister);
 router.post('/register', isNotLoggedIn, UserController.postRegister);
 router.get('/login', isNotLoggedIn, UserController.getLogin);

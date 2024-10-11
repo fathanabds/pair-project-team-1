@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.use(isLoggedIn);
 
+// main => /medicalRecord
 router.get('/patients/', isPatient, UserController.getPatientMR);
 router.get('/doctors/', isDoctor, UserController.getDoctorMR);
 router.get('/sendEmail/:recordId', isPatient, MRController.sendEmail);
