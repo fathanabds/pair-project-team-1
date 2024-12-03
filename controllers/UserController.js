@@ -24,15 +24,13 @@ class UserController {
       res.redirect('/user/login');
     } catch (error) {
       console.log(error);
-      if (error.name != 'SequelizeValidationError') {
-        return res.send(error.message);
-      }
       if ((error.name = 'SequelizeValidationError')) {
         const errors = error.errors.map((e) => {
           return ` ${e.message}`;
         });
         return res.redirect(`/user/register?error=${errors}`);
       }
+      return res.send(error.message);
     }
   }
 
