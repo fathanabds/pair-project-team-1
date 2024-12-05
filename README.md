@@ -20,3 +20,9 @@ Install dependencies with npm
 ```bash
   npm install
 ```
+
+## Tech Stack
+
+- ExpressJS
+- PostgreSQL
+- TailwindCSS
